@@ -18,14 +18,12 @@ namespace ProductWebAPI.Controllers
             _dbContext = productDbContext;
         }
 
-        [Authorize]
-        [HttpGet("GetProducts")]
+        [HttpGet]
         public ActionResult<IEnumerable<Product>> GetProducts()
         {
-            var headers = HttpContext.Request.Headers;
-            var model = Enumerable.Empty<Product>();
-            return Ok(model);
+            return _dbContext.Product;
         }
+
         [HttpGet("{productId:int}")]
         public async Task<ActionResult<Product>> GetById(int productId)
         {

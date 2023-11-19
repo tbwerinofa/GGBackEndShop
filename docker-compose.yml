@@ -14,7 +14,7 @@ services:
         networks:
           - backend
         ports:
-          - 8001:1433
+          - 18001:1433
     productwebapi:
         container_name: product-api
         image: ${DOCKER_REGISTRY-}productwebapi
@@ -23,9 +23,20 @@ services:
           dockerfile: ProductWebAPI/Dockerfile
         networks:
           - backend
-        ports:
-          - 8002:80
         environment:
           - DB_HOST=productdb
           - DB_NAME=ProductShopDB
           - DB_SA_PASSWORD=P@ssw0rd!
+
+    apigateway:
+        container_name:  backend-shop-api-gateway
+        image: ${DOCKER_REGISTRY-}apigateway
+        build:
+          context: .
+          dockerfile: ApiGateway/Dockerfile
+        ports:
+          - 8001:80
+        networks:
+           - backend
+
+

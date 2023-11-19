@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservi
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E9C87C1F-3FC3-41F7-B2C1-999E4912E94B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{26B921CD-5DF8-4AE3-8DC1-8A43FC2A2D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{90F22606-9369-4C91-AD8A-964F37347EAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,17 @@ Global
 		{E9C87C1F-3FC3-41F7-B2C1-999E4912E94B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9C87C1F-3FC3-41F7-B2C1-999E4912E94B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9C87C1F-3FC3-41F7-B2C1-999E4912E94B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F22606-9369-4C91-AD8A-964F37347EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F22606-9369-4C91-AD8A-964F37347EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F22606-9369-4C91-AD8A-964F37347EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F22606-9369-4C91-AD8A-964F37347EAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{48F1B5C1-CF7E-4B34-9858-AD34F8859A09} = {86E1244B-EBF6-492C-BA03-E852055BB793}
+		{90F22606-9369-4C91-AD8A-964F37347EAE} = {26B921CD-5DF8-4AE3-8DC1-8A43FC2A2D05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2AFF471-EAC1-4121-8B2C-B4977C2C417C}
