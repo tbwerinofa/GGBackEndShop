@@ -34,7 +34,7 @@ namespace ProductWebAPI.Controllers
         {
             await _dbContext.Product.AddAsync(product);
             await _dbContext.SaveChangesAsync();
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPut]
@@ -42,7 +42,7 @@ namespace ProductWebAPI.Controllers
         {
             _dbContext.Product.Update(product);
             await _dbContext.SaveChangesAsync();
-            return Ok();
+            return Ok(true);
         }
 
         [HttpDelete("{productId:int}")]

@@ -1,9 +1,12 @@
+using ShopUI.APIClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped(sp=>new HttpClient { BaseAddress = new Uri("http://apigateway")});
+builder.Services.AddHttpClient<IProductAPIClient, ProductAPIClient>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
