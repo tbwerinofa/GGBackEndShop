@@ -20,6 +20,13 @@ var connectionString = $"Server={dbHost};DataBase={dbName};Uid=SA;Pwd={dbPasswor
 builder.Services.AddDbContext<ProductDBContext>(options =>
                 options.UseSqlServer(connectionString));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,7 +36,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
+//app.UseAuthorization();
+
+app.UseCors(options =>
+    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 

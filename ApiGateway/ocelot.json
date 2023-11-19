@@ -1,9 +1,26 @@
 {
 
-  "ReRoutes": [
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [ "GET", "POST","PUT","DELETE" ],
+      "UpstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productwebapi",
+          "Port": 80
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8003"
+  }
+  /*
     {
       "UpstreamPathTemplate": "/api/Product",
-      "UpstreamHttpMethod": [ "Get", "POST", "Put" ],
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
       "DownstreamScheme": "http",
       "DownstreamHostsAndPorts": [
         {
@@ -15,7 +32,7 @@
 
     },
     {
-      "UpstreamPathTemplate": "/api/Product{productId}",
+      "UpstreamPathTemplate": "/api/Product/{productId}",
       "UpstreamHttpMethod": [ "Get", "Delete" ],
       "DownstreamScheme": "http",
       "DownstreamHostsAndPorts": [
@@ -24,11 +41,13 @@
           "Port": 80
         }
       ],
-      "DownstreamPathTemplate": "/api/Product{productId}"
+      "DownstreamPathTemplate": "/api/Product/{productId}"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:8001"
+    "BaseUrl": "http://localhost:8003"
   }
+
+    */
 
 }

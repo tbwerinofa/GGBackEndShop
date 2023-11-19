@@ -2,6 +2,8 @@ version: '3.4'
 
 networks:
   backend:
+  frontend:
+
 
 
 services:
@@ -35,8 +37,19 @@ services:
           context: .
           dockerfile: ApiGateway/Dockerfile
         ports:
-          - 8001:80
+          - 8003:80
         networks:
            - backend
+           - frontend
 
+    shopui:
+        container_name: shop-ui
+        image: ${DOCKER_REGISTRY-}shopui
+        build:
+          context: .
+          dockerfile: ShopUI/Dockerfile
+        ports:
+         - 8002:80
+        networks:
+           - frontend
 

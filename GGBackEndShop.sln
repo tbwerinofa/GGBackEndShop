@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductWebAPI", "ProductWebAPI\ProductWebAPI.csproj", "{48F1B5C1-CF7E-4B34-9858-AD34F8859A09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductWebAPI", "ProductWebAPI\ProductWebAPI.csproj", "{48F1B5C1-CF7E-4B34-9858-AD34F8859A09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{86E1244B-EBF6-492C-BA03-E852055BB793}"
 EndProject
@@ -11,7 +11,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{26B921CD-5DF8-4AE3-8DC1-8A43FC2A2D05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{90F22606-9369-4C91-AD8A-964F37347EAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{90F22606-9369-4C91-AD8A-964F37347EAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{FF2E6838-5727-4745-8EDD-E3FC6FC0DADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopUI", "ShopUI\ShopUI.csproj", "{657AC327-3196-45D0-BD34-47BCFFF604F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{90F22606-9369-4C91-AD8A-964F37347EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90F22606-9369-4C91-AD8A-964F37347EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90F22606-9369-4C91-AD8A-964F37347EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657AC327-3196-45D0-BD34-47BCFFF604F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657AC327-3196-45D0-BD34-47BCFFF604F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657AC327-3196-45D0-BD34-47BCFFF604F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657AC327-3196-45D0-BD34-47BCFFF604F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{48F1B5C1-CF7E-4B34-9858-AD34F8859A09} = {86E1244B-EBF6-492C-BA03-E852055BB793}
 		{90F22606-9369-4C91-AD8A-964F37347EAE} = {26B921CD-5DF8-4AE3-8DC1-8A43FC2A2D05}
+		{657AC327-3196-45D0-BD34-47BCFFF604F9} = {FF2E6838-5727-4745-8EDD-E3FC6FC0DADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2AFF471-EAC1-4121-8B2C-B4977C2C417C}
