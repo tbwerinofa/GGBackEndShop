@@ -1,0 +1,31 @@
+version: '3.4'
+
+networks:
+  backend:
+
+
+services:
+    productdb:
+        container_name: product-db
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=P@ssw0rd!
+        networks:
+          - backend
+        ports:
+          - 8001:1433
+    productwebapi:
+        container_name: product-api
+        image: ${DOCKER_REGISTRY-}productwebapi
+        build:
+          context: .
+          dockerfile: ProductWebAPI/Dockerfile
+        networks:
+          - backend
+        ports:
+          - 8002:80
+        environment:
+          - DB_HOST=productdb
+          - DB_NAME=ProductShopDB
+          - DB_SA_PASSWORD=P@ssw0rd!
