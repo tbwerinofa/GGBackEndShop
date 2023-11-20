@@ -1,6 +1,6 @@
 ﻿using ProductWebAPI.Models;
 
-namespace ProductWebAPI.Services.DataRepository.Service
+namespace ProductWebAPI.Services.DomainService
 {
     public interface IProductImageService
     {

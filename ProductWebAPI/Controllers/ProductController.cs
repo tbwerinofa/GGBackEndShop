@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
-using ProductWebAPI.Services.DataRepository.Service;
+using ProductWebAPI.Services.DomainService;
 
 namespace ProductWebAPI.Controllers
 {

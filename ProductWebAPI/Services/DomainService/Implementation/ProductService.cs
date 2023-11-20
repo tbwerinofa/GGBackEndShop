@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
+using ProductWebAPI.Services.DomainService;
 
-namespace ProductWebAPI.Services.DataRepository.Service
+namespace ProductWebAPI.Services.DomainService.Implementation
 {
-    public class ProductService:IProductService
+    public class ProductService : IProductService
     {
         private readonly ProductDBContext _dbContext;
 
@@ -18,7 +19,8 @@ namespace ProductWebAPI.Services.DataRepository.Service
 
             var entity = await _dbContext.Product.ToListAsync();
 
-           return entity.Select( a=>new ProductModel{
+            return entity.Select(a => new ProductModel
+            {
                 Id = a.Id,
                 Name = a.Name,
                 Code = a.Code,
@@ -29,7 +31,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
         public async Task<ProductModel> GetById(int productId)
         {
             ProductModel model = new ProductModel();
-            Product entity = await _dbContext.Product.FindAsync(productId);
+            var entity = await _dbContext.Product.FindAsync(productId);
 
             if (entity != null)
             {
@@ -67,7 +69,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
             try
             {
                 Product entity = await _dbContext.Product.FindAsync(model.Id);
-                if(entity !=null)
+                if (entity != null)
                 {
                     TranformModel(model, entity);
                     _dbContext.Product.Update(entity);
@@ -79,7 +81,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
             {
                 saveResult.Message = "Error Saving Record";
             }
-          
+
             return saveResult;
         }
 
@@ -101,7 +103,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
             {
                 saveResult.Message = "Error Deleting Record";
             }
-          
+
             return saveResult;
         }
 
@@ -112,6 +114,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
             entity.Name = model.Name;
             entity.Code = model.Code;
             entity.Price = model.Price;
+            entity.UpdatedTimestamp = DateTime.Now;
             //entity.UserId = model.UserId;
         }
 

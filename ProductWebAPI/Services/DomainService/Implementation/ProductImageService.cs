@@ -1,10 +1,11 @@
 ﻿using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
+using ProductWebAPI.Services.DomainService;
 
-namespace ProductWebAPI.Services.DataRepository.Service
+namespace ProductWebAPI.Services.DomainService.Implementation
 {
 
-    public class ProductImageService: IProductImageService
+    public class ProductImageService : IProductImageService
     {
         #region global fields
         private readonly ProductDBContext _dbContext;
@@ -25,11 +26,11 @@ namespace ProductWebAPI.Services.DataRepository.Service
 
             var entity = await _dbContext.ProductImage.FindAsync(productId);
 
-            if(entity != null)
+            if (entity != null)
             {
-                TranfromModel(model,entity);
+                TranfromModel(model, entity);
             }
-       
+
 
             return model;
         }
@@ -61,22 +62,23 @@ namespace ProductWebAPI.Services.DataRepository.Service
             try
             {
                 var entity = await _dbContext.ProductImage.FindAsync(productId);
-                if(entity !=null)
+                if (entity != null)
                 {
                     _dbContext.ProductImage.Remove(entity);
                     await _dbContext.SaveChangesAsync();
                     saveResult.IsSuccess = true;
                 }
-               
+
             }
             catch (Exception)
             {
                 saveResult.Message = "Error Deleting Record";
             }
-          
+
             return saveResult;
         }
         #endregion
+
         #region Transform
         private static void TranfromModel(ProductImageModel model, ProductImage entity)
         {
@@ -85,7 +87,7 @@ namespace ProductWebAPI.Services.DataRepository.Service
             model.FileName = entity.FileName;
         }
 
-        private static void TranformEntity(ProductImage entity,ProductImageModel model)
+        private static void TranformEntity(ProductImage entity, ProductImageModel model)
         {
             entity.ProductId = model.ProductId;
             entity.FileNameGuid = model.FileNameGuid;

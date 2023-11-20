@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Minio;
 using ProductWebAPI.DataRepository;
-using ProductWebAPI.Services.DataRepository.Service;
 using ProductWebAPI.Services.DocumentService;
+using ProductWebAPI.Services.DomainService;
+using ProductWebAPI.Services.DomainService.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ builder.Services.AddMinio(configureClient => configureClient
 builder.Services.AddScoped<IDocumentManager, DocumentManager>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IShopService, ShopService>();
 
 var app = builder.Build();
 

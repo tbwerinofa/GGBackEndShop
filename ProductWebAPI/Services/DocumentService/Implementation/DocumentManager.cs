@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
-using Minio;
 using ProductWebAPI.Models;
-using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
-using System.Security.AccessControl;
-using System;
 
 namespace ProductWebAPI.Services.DocumentService
 {

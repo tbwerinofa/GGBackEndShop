@@ -1,16 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Minio.DataModel;
+
 
 namespace ProductWebAPI.DataRepository
 {
-    public class Product
+    public class Product: Audit
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Product()
+        {
+            this.ProductImages = new HashSet<ProductImage>();
+        }
+
         public string Name { get; set; }
         public string Code { get; set; }
         public decimal Price { get; set; }
+
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
 
     }
 }
