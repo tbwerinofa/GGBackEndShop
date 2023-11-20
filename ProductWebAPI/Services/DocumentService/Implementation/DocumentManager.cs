@@ -6,6 +6,8 @@ using Minio;
 using ProductWebAPI.Models;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
+using System.Security.AccessControl;
+using System;
 
 namespace ProductWebAPI.Services.DocumentService
 {
@@ -26,11 +28,9 @@ namespace ProductWebAPI.Services.DocumentService
         #endregion
 
         #region Methods
-        public bool UpLoad(ProductImageModel productImage)
+        public ProductImageModel UpLoad(NewProductImageModel newProductImage)
         {
-
-            if (productImage.File == null)
-                return false;
+            ProductImageModel model = new ProductImageModel();
 
             var minioSection = _configuration.GetSection("MinIOSettings");
 
@@ -39,15 +39,12 @@ namespace ProductWebAPI.Services.DocumentService
             var secretKey = minioSection["SecretKey"];
             var bucketName = minioSection["BucketName"];
 
+            if (newProductImage.File == null || bucketName == null)
+                return model;
 
-
-            productImage.FileNameGuid = GenerateFileNameGuid(productImage.File);
-            productImage.FileName = productImage.File.FileName;
-
-
-
-            if (bucketName == null)
-                return false;
+            model.FileNameGuid = GenerateFileNameGuid(newProductImage.File);
+            model.FileName = newProductImage.File.FileName;
+            model.ProductId = newProductImage.ProductId;
 
             try
             {
@@ -56,19 +53,51 @@ namespace ProductWebAPI.Services.DocumentService
                                     .WithCredentials(accessKey, secretKey)
                                     .WithSSL()
                                     .Build();
-                Run(minio, bucketName, productImage.FileNameGuid,productImage.File).Wait();
-
-                return true;
+                Run(minio, bucketName, model.FileNameGuid, newProductImage.File).Wait();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return false;
+                
             }
+            return model;
 
         }
 
+        public async Task<bool> Delete(string fileNameGuid)
+        {
+            var minioSection = _configuration.GetSection("MinIOSettings");
 
+            var endpoint = minioSection["EndPoint"];
+            var accessKey = minioSection["AccessKey"];
+            var secretKey = minioSection["SecretKey"];
+            var bucketName = minioSection["BucketName"];
+
+            var minio = new MinioClient()
+                                  .WithEndpoint(endpoint)
+                                  .WithCredentials(accessKey, secretKey)
+                                  .WithSSL()
+                                  .Build();
+            if (minio is null) throw new ArgumentNullException(nameof(minio));
+
+            try
+            {
+                var args = new RemoveObjectArgs()
+                    .WithBucket(bucketName)
+                    .WithObject(fileNameGuid);
+
+
+                Console.WriteLine("Running example for API: RemoveObjectAsync");
+                await minio.RemoveObjectAsync(args).ConfigureAwait(false);
+                _logger.LogInformation($"Removed object {fileNameGuid} from bucket {bucketName} successfully");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[Bucket-Object]  Exception: {ex}");
+            }
+            return false;
+        }
         private async Task Run(IMinioClient minio,string bucketName,string fileNameGuid,IFormFile file)
         {
 

@@ -73,8 +73,8 @@ namespace ShopUI.APIClient
             try
             {
                 var response = await _client.PostAsync(RequestUri, model, new JsonMediaTypeFormatter());
-                bool saveResult = await response.Content.ReadAsAsync<bool>();
-                return saveResult;
+                //bool saveResult = await response.Content.ReadAsAsync<bool>();
+                return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
@@ -88,11 +88,8 @@ namespace ShopUI.APIClient
 
         public async Task<bool> Update(ProductModel model)
         {
-
             var response = await _client.PutAsync(RequestUri, model, new JsonMediaTypeFormatter());
-            bool saveResult = await response.Content.ReadAsAsync<bool>();
-
-            return saveResult;
+            return response.IsSuccessStatusCode;
         }
         #endregion
 

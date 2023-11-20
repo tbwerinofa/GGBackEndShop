@@ -4,6 +4,8 @@ namespace ProductWebAPI.Services.DocumentService
 {
     public interface IDocumentManager
     {
-        bool UpLoad(ProductImageModel productImage);
+        ProductImageModel UpLoad(NewProductImageModel productImage);
+
+        Task<bool> Delete(string fileNameGuid);
     }
 }

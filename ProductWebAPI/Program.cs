@@ -47,6 +47,7 @@ builder.Services.AddMinio(configureClient => configureClient
 
 builder.Services.AddScoped<IDocumentManager, DocumentManager>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

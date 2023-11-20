@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductWebAPI.Models
+namespace ProductWebAPI.DataRepository
 {
     public class Product
     {
@@ -11,5 +11,6 @@ namespace ProductWebAPI.Models
         public string Name { get; set; }
         public string Code { get; set; }
         public decimal Price { get; set; }
+
     }
 }

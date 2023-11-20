@@ -71,18 +71,18 @@ namespace ProductWebAPI.Services.DataRepository.Service
             }
             catch (Exception)
             {
-                saveResult.Message = "Error Saving Record";
+                saveResult.Message = "Error Deleting Record";
             }
           
             return saveResult;
         }
-
+        #endregion
+        #region Transform
         private static void TranfromModel(ProductImageModel model, ProductImage entity)
         {
             model.ProductId = entity.ProductId;
             model.FileNameGuid = entity.FileNameGuid;
             model.FileName = entity.FileName;
-            model.UserId = entity.UserId;
         }
 
         private static void TranformEntity(ProductImage entity,ProductImageModel model)
@@ -90,7 +90,6 @@ namespace ProductWebAPI.Services.DataRepository.Service
             entity.ProductId = model.ProductId;
             entity.FileNameGuid = model.FileNameGuid;
             entity.FileName = model.FileName;
-            entity.UserId = model.UserId;
         }
 
         #endregion

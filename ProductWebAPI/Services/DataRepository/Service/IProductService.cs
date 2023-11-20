@@ -5,9 +5,10 @@ namespace ProductWebAPI.Services.DataRepository.Service
 {
     public interface IProductService
     {
-        Task<Product> GetById(int productId);
-        Task<SaveResult> Create(Product product);
-        Task<SaveResult> Update(Product product);
+        Task<ProductModel> GetById(int productId);
+        Task<SaveResult> Create(NewProductModel product);
+        Task<SaveResult> Update(ProductModel product);
         Task<SaveResult> Delete(int productId);
+        Task<IEnumerable<ProductModel>> GetModelList();
     }
 }
