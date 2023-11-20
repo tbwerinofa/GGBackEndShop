@@ -1,8 +1,13 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ShopUI.Models;
+using System;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopUI.APIClient
 {
@@ -101,5 +106,27 @@ namespace ShopUI.APIClient
         }
 
         #endregion
-    }
+
+        #region Upload
+
+        public async Task<SaveResult> UploadProductImage(ProductImageModel model)
+        {
+            SaveResult saveResult = new SaveResult();
+            HttpContent fileStreamContent = new StreamContent(model.FormFile.OpenReadStream());
+            fileStreamContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data") { Name = "File", FileName = model.FormFile.FileName };
+            fileStreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+            using (var client = new HttpClient())
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(new StringContent(model.ProductId.ToString()), "ProductId");
+                formData.Add(fileStreamContent);
+                var response = await _client.PostAsync("productimage", formData);
+                saveResult.IsSuccess = response.IsSuccessStatusCode;
+            }
+
+
+            return saveResult;
+        }
+            #endregion
+        }
 }

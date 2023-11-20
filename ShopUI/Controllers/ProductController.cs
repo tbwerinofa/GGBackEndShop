@@ -15,18 +15,15 @@ namespace ShopUI.Controllers
             _productService = productService;
         }
 
+        #region Read
         public async Task<ActionResult> Index()
         {
             var model = await _productService.GetModelList("");
             return View(model);
         }
+        #endregion
 
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        #region Create
         // GET: ProductController/Create
         public ActionResult Create()
         {
@@ -56,6 +53,9 @@ namespace ShopUI.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Edit
         // GET: ProductController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
@@ -83,6 +83,11 @@ namespace ShopUI.Controllers
 
         }
 
+        // GET: ProductController/Edit/5
+
+#endregion
+
+        #region Delete
         // GET: ProductController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
@@ -90,6 +95,7 @@ namespace ShopUI.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
 
     }
 }

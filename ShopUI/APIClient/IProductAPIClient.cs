@@ -13,5 +13,7 @@ namespace ShopUI.APIClient
         Task<bool> Update(ProductModel model);
 
         Task<bool> DeleteById(int id);
+
+        Task<SaveResult> UploadProductImage(ProductImageModel model);
     }
 }

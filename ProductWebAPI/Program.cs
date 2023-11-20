@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Minio;
 using ProductWebAPI.DataRepository;
+using ProductWebAPI.Services.DataRepository.Service;
+using ProductWebAPI.Services.DocumentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +30,24 @@ builder.Services.AddCors(options =>
         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
+
+
+var endpoint = builder.Configuration.GetSection("MinIOSettings:EndPoint").Value;
+var accessKey = builder.Configuration.GetSection("MinIOSettings:AccessKey").Value;
+var secretKey = builder.Configuration.GetSection("MinIOSettings:SecretKey").Value;
+
+// Add Minio using the default endpoint
+builder.Services.AddMinio(accessKey, secretKey);
+
+// Add Minio using the custom endpoint and configure additional settings for default MinioClient initialization
+builder.Services.AddMinio(configureClient => configureClient
+    .WithEndpoint(endpoint)
+    .WithCredentials(accessKey, secretKey));
+
+
+builder.Services.AddScoped<IDocumentManager, DocumentManager>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
