@@ -30,28 +30,6 @@ services:
           - DB_NAME=ProductShopDB
           - DB_SA_PASSWORD=P@ssw0rd!
 
-    apigateway:
-        container_name:  backend-shop-api-gateway
-        image: ${DOCKER_REGISTRY-}apigateway
-        build:
-          context: .
-          dockerfile: ApiGateway/Dockerfile
-        ports:
-          - 8003:80
-        networks:
-           - backend
-           - frontend
-
-    shopui:
-        container_name: shop-ui
-        image: ${DOCKER_REGISTRY-}shopui
-        build:
-          context: .
-          dockerfile: ShopUI/Dockerfile
-        ports:
-         - 8002:80
-        networks:
-           - frontend
     authenticationapi:
         container_name: authentication-api
         image: ${DOCKER_REGISTRY-}authenticationapi

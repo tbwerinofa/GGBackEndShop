@@ -13,15 +13,7 @@ services:
     ports:
       - "80"
 
-
-  shopui:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-
-
-  onlineauthapi:
+  authenticationapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
