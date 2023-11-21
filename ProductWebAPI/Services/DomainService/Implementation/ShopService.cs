@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
-using System.Text.Json.Serialization;
 
 namespace ProductWebAPI.Services.DomainService.Implementation
 {
@@ -14,11 +13,12 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             _dbContext = productDbContext;
         }
 
-        public async Task<IEnumerable<ShopModel>> GetModelList()
+        public async Task<IEnumerable<ShopModel>> GetModelList(string userId)
         {
 
             var entity = await _dbContext.Product
                 .Include(b=>b.ProductImages)
+                .Where(a=>a.UserId == userId)
                 .ToListAsync();
 
             return entity.Select(a => new ShopModel

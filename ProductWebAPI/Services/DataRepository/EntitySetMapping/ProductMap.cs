@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using ProductWebAPI.DataRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ProductWebAPI.DataRepository
 {
@@ -16,14 +15,12 @@ namespace ProductWebAPI.DataRepository
             modelBuilder.HasKey(c => c.Id);
             modelBuilder.Property(b => b.CreatedTimestamp).HasDefaultValueSql("GetDate()");
 
-            //modelBuilder.HasIndex(a => new { a.Name, a.ProductCategoryId }).IsUnique();
+            modelBuilder.HasIndex(a => new { a.Name, a.Code,a.UserId }).IsUnique();
             modelBuilder.Property(a => a.Name).IsRequired();
             modelBuilder.Property(a => a.Code).IsRequired();
             modelBuilder.Property(a => a.Price).IsRequired();
-
-           // modelBuilder.HasOne(u => u.UpdatedUser)
-           //.WithMany(u => u.UpdatedProducts)
-           //.OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Property(a => a.UserId).IsRequired();
+;
 
         }
     }

@@ -1,9 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Minio.DataModel;
-
-
-namespace ProductWebAPI.DataRepository
+﻿namespace ProductWebAPI.DataRepository
 {
     public class Product: Audit
     {

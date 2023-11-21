@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProductWebAPI.Models
 {
@@ -15,6 +16,8 @@ namespace ProductWebAPI.Models
         public string Code { get; set; }
         [Required, Range(1, Int32.MaxValue, ErrorMessage = "required")]
         public decimal Price { get; set; }
-        //public string UserId { get; set; }
+
+        [JsonIgnore]
+        public string? UserId { get; set; }
     }
 }

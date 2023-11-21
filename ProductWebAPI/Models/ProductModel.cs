@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProductWebAPI.Models
 {
@@ -16,6 +17,8 @@ namespace ProductWebAPI.Models
         public string Code { get; set; }
         [Required, Range(1, Int32.MaxValue, ErrorMessage = "price must be greater than 0")]
         public decimal Price { get; set; }
-        //public string UserId { get; set; }
+
+        [JsonIgnore]
+        public string? UserId { get; set; }
     }
 }

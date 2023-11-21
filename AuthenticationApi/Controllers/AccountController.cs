@@ -9,16 +9,22 @@ namespace AuthenticationApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-
+        #region global fields
         private readonly JwtTokenHandler _jwtTokenHandler;
         private readonly IAuthenticationService _authService;
+        #endregion
 
+        #region CTOR
         public AccountController(JwtTokenHandler jwtTokenHandler,
             IAuthenticationService authService)
         {
             _jwtTokenHandler = jwtTokenHandler;
             _authService = authService;
         }
+
+        #endregion
+
+        #region Action Result
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -51,5 +57,6 @@ namespace AuthenticationApi.Controllers
 
         }
 
+        #endregion
     }
 }

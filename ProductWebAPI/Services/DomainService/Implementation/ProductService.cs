@@ -1,19 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
-using ProductWebAPI.Services.DomainService;
 
 namespace ProductWebAPI.Services.DomainService.Implementation
 {
     public class ProductService : IProductService
     {
-        private readonly ProductDBContext _dbContext;
 
+        #region global fields
+        private readonly ProductDBContext _dbContext;
+        #endregion
+
+
+        #region CTOR
         public ProductService(ProductDBContext productDbContext)
         {
             _dbContext = productDbContext;
         }
+        #endregion
 
+        #region CRUD
         public async Task<IEnumerable<ProductModel>> GetModelList(string userId)
         {
 
@@ -30,10 +36,10 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             });
         }
 
-        public async Task<ProductModel> GetById(int productId)
+        public async Task<ProductModel> GetById(int productId, string userId)
         {
             ProductModel model = new ProductModel();
-            var entity = await _dbContext.Product.FindAsync(productId);
+            var entity = await _dbContext.Product.FirstOrDefaultAsync(a => a.Id == productId && a.UserId == userId);
 
             if (entity != null)
             {
@@ -48,13 +54,23 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             SaveResult saveResult = new SaveResult();
             try
             {
-                Product entity = new Product();
-
-                TranformModel(model, entity);
+                Product entity = TransformModel(model);
 
                 await _dbContext.Product.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 saveResult.IsSuccess = true;
+            }
+            catch (DbUpdateException upDateEx)
+            {
+                var results = upDateEx.GetSqlerrorNo();
+                if (results == (int)SqlErrNo.UQ)
+                {
+                    saveResult.Message = ConstEntity.UniqueKeyMsg;
+                }
+                else
+                {
+                    saveResult.Message = "Error Saving Record";
+                }
             }
             catch (Exception)
             {
@@ -70,13 +86,25 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             SaveResult saveResult = new SaveResult();
             try
             {
-                Product entity = await _dbContext.Product.FindAsync(model.Id);
+                var entity = await _dbContext.Product.FirstOrDefaultAsync(a=>a.Id == model.Id && a.UserId == model.UserId);
+
                 if (entity != null)
                 {
                     TranformModel(model, entity);
                     _dbContext.Product.Update(entity);
                     await _dbContext.SaveChangesAsync();
                     saveResult.IsSuccess = true;
+                }
+            }
+            catch (DbUpdateException upDateEx)
+            {
+                var results = upDateEx.GetSqlerrorNo();
+                if(results == (int)SqlErrNo.UQ)
+                {
+                 saveResult.Message = ConstEntity.UniqueKeyMsg;
+                }else
+                {
+                    saveResult.Message = "Error Saving Record";
                 }
             }
             catch (Exception)
@@ -88,17 +116,27 @@ namespace ProductWebAPI.Services.DomainService.Implementation
         }
 
 
-        public async Task<SaveResult> Delete(int productId)
+        public async Task<SaveResult> Delete(int productId,string userId)
         {
             SaveResult saveResult = new SaveResult();
             try
             {
-                var entity = await _dbContext.Product.FindAsync(productId);
+                var entity = await _dbContext.Product.Include(a=>a.ProductImages).FirstOrDefaultAsync(a => a.Id == productId && a.UserId == userId);
+
+
                 if (entity != null)
                 {
-                    _dbContext.Product.Remove(entity);
-                    await _dbContext.SaveChangesAsync();
-                    saveResult.IsSuccess = true;
+                    if (!entity.ProductImages.Any())
+                    {
+                        _dbContext.Product.Remove(entity);
+                        await _dbContext.SaveChangesAsync();
+                        saveResult.IsSuccess = true;
+                    }
+                    else
+                    {
+                        saveResult.Message = "Error Deleting Record: Product has related images";
+                    }
+
                 }
             }
             catch (Exception)
@@ -108,6 +146,8 @@ namespace ProductWebAPI.Services.DomainService.Implementation
 
             return saveResult;
         }
+
+        #endregion
 
         #region Transform
 
@@ -120,12 +160,15 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             //entity.UserId = model.UserId;
         }
 
-        private static void TranformModel(NewProductModel model, Product entity)
+        private static Product TransformModel(NewProductModel model)
         {
-            entity.Name = model.Name;
-            entity.Code = model.Code;
-            entity.Price = model.Price;
-            //entity.UserId = model.UserId;
+            return new Product
+            { 
+                Name = model.Name,
+                Code = model.Code,
+                Price = model.Price,
+                UserId = model.UserId
+            };
         }
 
         private static void TranformEntity(Product entity, ProductModel model)

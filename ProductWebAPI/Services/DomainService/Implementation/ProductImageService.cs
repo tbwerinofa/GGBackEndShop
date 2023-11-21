@@ -1,6 +1,6 @@
-﻿using ProductWebAPI.DataRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductWebAPI.DataRepository;
 using ProductWebAPI.Models;
-using ProductWebAPI.Services.DomainService;
 
 namespace ProductWebAPI.Services.DomainService.Implementation
 {
@@ -20,11 +20,11 @@ namespace ProductWebAPI.Services.DomainService.Implementation
         #endregion
 
         #region Methods
-        public async Task<ProductImageModel> GetById(int productId)
+        public async Task<ProductImageModel> GetById(int Id,string userId)
         {
             ProductImageModel model = new ProductImageModel();
 
-            var entity = await _dbContext.ProductImage.FindAsync(productId);
+            var entity = await _dbContext.ProductImage.Include(a=>a.Product).FirstOrDefaultAsync(a=>a.Product.UserId == userId && a.Id == Id);
 
             if (entity != null)
             {
