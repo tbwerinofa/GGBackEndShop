@@ -8,7 +8,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "productwebapi",
+          "Host": "authenticationapi",
           "Port": 80
         }
       ]

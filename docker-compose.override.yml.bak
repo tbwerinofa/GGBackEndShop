@@ -21,7 +21,7 @@ services:
       - "80"
 
 
-  authenticationapi:
+  onlineauthapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:

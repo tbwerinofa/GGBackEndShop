@@ -52,4 +52,18 @@ services:
          - 8002:80
         networks:
            - frontend
+    authenticationapi:
+        container_name: authentication-api
+        image: ${DOCKER_REGISTRY-}authenticationapi
+        build:
+          context: .
+          dockerfile: AuthenticationApi/Dockerfile
+        depends_on: 
+          - productdb
+        environment:
+          - DB_HOST=productdb
+          - DB_NAME=UserDB
+          - DB_SA_PASSWORD=P@ssw0rd!
+        networks:
+           - backend
 

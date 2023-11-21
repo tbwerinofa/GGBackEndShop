@@ -1,3 +1,4 @@
+using JwtAuthenticationManager;
 using Microsoft.EntityFrameworkCore;
 using Minio;
 using ProductWebAPI.DataRepository;
@@ -10,9 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCustomJwtAuthentication();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddSingleton<JwtTokenHandler>();
 
 /* database context dependency injection*/
 var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
@@ -60,7 +65,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCors(options =>
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

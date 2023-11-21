@@ -17,6 +17,6 @@ namespace ProductWebAPI.DataRepository
         public decimal Price { get; set; }
 
         public virtual ICollection<ProductImage> ProductImages { get; set; }
-
+        public string UserId { get; internal set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductWebAPI.Models;
 using ProductWebAPI.Services.DocumentService;
 using ProductWebAPI.Services.DomainService;
@@ -7,6 +8,7 @@ namespace ProductWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductImageController : ControllerBase
     {
         private readonly IDocumentManager _documentManager;

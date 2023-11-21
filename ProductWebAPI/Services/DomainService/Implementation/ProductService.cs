@@ -14,10 +14,12 @@ namespace ProductWebAPI.Services.DomainService.Implementation
             _dbContext = productDbContext;
         }
 
-        public async Task<IEnumerable<ProductModel>> GetModelList()
+        public async Task<IEnumerable<ProductModel>> GetModelList(string userId)
         {
 
-            var entity = await _dbContext.Product.ToListAsync();
+            var entity = await _dbContext.Product
+                .Where(a=>a.UserId == userId)
+                .ToListAsync();
 
             return entity.Select(a => new ProductModel
             {

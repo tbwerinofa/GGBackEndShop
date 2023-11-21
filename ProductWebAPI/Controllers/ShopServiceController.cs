@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductWebAPI.Models;
 using ProductWebAPI.Services.DomainService;
 
@@ -6,6 +7,7 @@ namespace ProductWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ShopServiceController : ControllerBase
     {
 

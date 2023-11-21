@@ -9,6 +9,6 @@ namespace ProductWebAPI.Services.DomainService
         Task<SaveResult> Create(NewProductModel product);
         Task<SaveResult> Update(ProductModel product);
         Task<SaveResult> Delete(int productId);
-        Task<IEnumerable<ProductModel>> GetModelList();
+        Task<IEnumerable<ProductModel>> GetModelList(string userId);
     }
 }

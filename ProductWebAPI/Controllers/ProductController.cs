@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ProductWebAPI.DataRepository;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductWebAPI.Models;
 using ProductWebAPI.Services.DomainService;
+using System.Security.Claims;
 
 namespace ProductWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    [Authorize]
+    public class ProductController : BaseController
     {
 
         private readonly IProductService _productService;
@@ -17,10 +19,19 @@ namespace ProductWebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
-            var model = await _productService.GetModelList();
+            string? userId = GetUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }            
+            var model = await _productService.GetModelList(userId);
             return Ok(model);
+           
+                
+           
         }
 
         [HttpGet("{productId:int}")]
